@@ -1,14 +1,19 @@
 package com.codecool.hashtable;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class HashTableTest {
 
     @Test
+    @Order(1)
     public void putAndGetElements() {
         // Arrange
         HashTable<String, Integer> hashTable = new HashTable<>();
@@ -25,6 +30,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(2)
     public void putAndGetElementsWithKeyHashCollision() {
         // Arrange
         HashTable<StringWrapper, Integer> hashTable = new HashTable<>();
@@ -41,6 +47,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(3)
     public void putAndGetWithNullKey() {
         // Arrange
         HashTable<Integer, String> hashTable = new HashTable<>();
@@ -53,6 +60,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(4)
     public void putAndGetWithNullValue() {
         // Arrange
         HashTable<Integer, String> hashTable = new HashTable<>();
@@ -64,6 +72,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(5)
     public void overrideValueForSpecificKey() {
         // Arrange
         HashTable<String, String> hashTable = new HashTable<>();
@@ -78,6 +87,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(6)
     public void removeKey() {
         // Arrange
         HashTable<Integer, String> hashTable = new HashTable<>();
@@ -92,6 +102,7 @@ class HashTableTest {
     }
 
     @Test
+    @Order(7)
     public void clearDict() {
         // Arrange
         HashTable<Integer, String> hashTable = new HashTable<>();

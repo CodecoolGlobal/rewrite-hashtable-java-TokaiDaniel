@@ -1,5 +1,6 @@
 package com.codecool.hashtable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HashTable <K, V>{
@@ -9,32 +10,74 @@ public class HashTable <K, V>{
 
     private List<List<Entry>> buckets;
 
+    public HashTable() {
+        buckets = new ArrayList<>();
+        for (int i = 0; i < bucketsSize; i++) {
+            buckets.add(new ArrayList<>());
+        }
+    }
+
     private int getBucketIndexForKey(K key) {
-        throw new RuntimeException("FIXME");
+        if (key == null) return 0;
+        int hashCode = key.hashCode();
+        int index = hashCode % bucketsSize;
+        // key.hashCode() coule be negative.
+        index = index < 0 ? index * -1 : index;
+        return index;
     }
 
     private List<Entry> getBucketAtIndex(int position) {
-        throw new RuntimeException("FIXME");
+        return buckets.get(position);
     }
 
     private Entry findEntryInBucket(K key, List<Entry> bucket) {
-        throw new RuntimeException("FIXME");
+        for (Entry entry: bucket) {
+            if (entry.key == key) return entry;
+        }
+        return null;
     }
 
     public V get(K key) {
-        throw new RuntimeException("FIXME");
+        int index = getBucketIndexForKey(key);
+        List<Entry> bucket = getBucketAtIndex(index);
+        Entry entry = findEntryInBucket(key, bucket);
+        if (entry != null) return (V) entry.value;
+        else return null;
     }
 
     public void put(K key, V value) {
-        throw new RuntimeException("FIXME");
+        Entry newEntry = new Entry(key, value);
+
+        int bucketIndex = getBucketIndexForKey(key);
+        List<Entry> bucket = getBucketAtIndex(bucketIndex);
+
+        if (findEntryInBucket(key, bucket) != null) {
+            remove(key);
+        }
+        bucket.add(newEntry);
     }
 
     public V remove(K key) {
-        throw new RuntimeException("FIXME");
+        int bucketIndex = getBucketIndexForKey(key);
+        List<Entry> bucket = getBucketAtIndex(bucketIndex);
+
+        V value = null;
+        Entry remove = null;
+        for (Entry entry: bucket) {
+            if (entry.key == key) {
+                value = (V) entry.value;
+                remove = entry;
+            }
+        }
+        bucket.remove(remove);
+        return value;
     }
 
     public void clear() {
-        throw new RuntimeException("FIXME");
+        buckets = new ArrayList<>();
+        for (int i = 0; i < bucketsSize; i++) {
+            buckets.add(new ArrayList<>());
+        }
     }
 }
 
